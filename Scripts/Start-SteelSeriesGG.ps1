@@ -27,12 +27,13 @@ if ($ggProcesses.count -eq 0) {
         Start-Sleep -Seconds 1
     }
 
-    # Minimize all running SteelSeriesGGClient windows
+    # Minimize and close all running SteelSeriesGGClient windows
     foreach ($clientProcess in $clientProcesses) {
         $hwnd = $clientProcess.MainWindowHandle
         if ($hwnd -ne 0) {
             # Minimize the window (SW_MINIMIZE = 6)
             [void][Win32]::ShowWindow($hwnd, 6)
         }
+        $clientProcess.CloseMainWindow() | Out-Null
     }
 }
